@@ -5,7 +5,7 @@ Created on Tue Mar  7 14:47:02 2023
 @author: Rashid Alshehhi
 """
 
-!pip install streamlit yfinance fbprophet mplfinance numpy pandas
+#!pip install streamlit yfinance fbprophet mplfinance numpy pandas
 
 import streamlit as st
 import yfinance as yf
