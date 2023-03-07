@@ -1,12 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Mar  7 14:47:02 2023
-
-@author: Rashid Alshehhi
-"""
-
-#!pip install streamlit yfinance fbprophet mplfinance numpy pandas
-
 import streamlit as st
 import yfinance as yf
 from fbprophet import Prophet
@@ -14,16 +5,20 @@ import mplfinance as mpf
 import numpy as np
 import pandas as pd
 
-# Define the Streamlit app
-st.set_page_config(page_title='Stock Prediction App', page_icon=':chart_with_upwards_trend:')
-
-# Define the app layout
+# Define the app
 def app():
-    st.title('Stock Prediction App')
+    # Set the app title
+    st.set_page_config(page_title='Stock Price Prediction App')
 
-    # Define the user input for the stock symbol and time range
-    stock_name = st.text_input('Enter a stock symbol (e.g. AAPL)', value='AAPL')
-    time_range = st.selectbox('Select a time range', ('1d', '5d', '1mo', '3mo', '6mo', '1y', '2y', '5y', '10y', 'ytd', 'max'))
+    # Define the app header
+    st.write('# Stock Price Prediction App')
+
+    # Define the stock selection input
+    stock_name = st.text_input('Enter a stock symbol (e.g. AAPL)', 'AAPL')
+
+    # Define the time range input
+    time_range = st.selectbox('Select a time range',
+                              ['1mo', '3mo', '6mo', '1y', '2y', '5y'])
 
     # Get the stock data from Yahoo Finance
     stock_data = yf.download(stock_name, period=time_range)
@@ -63,18 +58,12 @@ def app():
     plot_data['R1'] = resistance1
     plot_data['R2'] = resistance2
     plot_data.index.name = 'Date'
-    fig1 = mpf.plot(plot_data, type='candle', style='charles', mav=(10, 20),
-                    title=f'{stock_name} ({time_range}) with Pivot Points',
-                    ylabel='Price ($)', ylabel_lower='Shares\nTraded',
-                    returnfig=True)
-
+    mpf.plot(plot_data, type='candle', style='charles', mav=(10, 20),
+             title=f'{stock_name} ({time_range}) with Pivot Points',
+             ylabel='Price ($)', ylabel_lower='Shares\nTraded')
+    
     # Define the plot of the Prophet forecast
-    fig2 = model.plot(forecast).get_figure()
+    fig = model.plot(forecast)
+    st.pyplot(fig)
 
-    # Display the plots
-    st.write(fig1)
-    st.write(fig2)
-
-# Run the Streamlit app
-if __name__ == '__main__':
-    app()
+app()
