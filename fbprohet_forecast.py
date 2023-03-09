@@ -50,4 +50,4 @@ if ticker:
     st.write(f"Predictions for {ticker} in {year}:")
     st.write(forecast[["ds", "yhat"]].tail())
 
-streamlit run app.py
+
