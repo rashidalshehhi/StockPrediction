@@ -1,6 +1,6 @@
 pandas
 Flask
-streamlit==0.89.0
-fbprophet==0.7.1
-yfinance==0.1.63
-plotly==4.14.3
+streamlit
+fbprophet
+yfinance
+plotly
